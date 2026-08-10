@@ -39,6 +39,7 @@
   .hint{ font-size:11px; color:#8a9886; margin-top:4px; }
   .noticebox{ font-size:11.5px; color:#3c4a3a; margin-top:8px; background:#f4f8f1; border:1px solid var(--line); border-left:3px solid var(--g2); border-radius:8px; padding:9px 11px; line-height:1.55; }
   .noticebox b{ color:var(--g); }
+  .noticebox a{ color:var(--g); font-weight:700; text-decoration:underline; }
   .dateRow{ display:flex; gap:8px; align-items:center; margin-bottom:8px; }
   .dateRow:last-child{ margin-bottom:0; }
   .dateRow input{ flex:1; }
@@ -85,7 +86,7 @@
     <div class="warnbox" id="warnbox">
       <h3>⚠️ 접수 전 꼭 확인해 주세요</h3>
       <ol>
-        <li>설치 경로(통로·엘리베이터·출입문)의 폭·높이가 <b>850mm 이상</b>이어야 설치가 가능합니다. 경로가 확보되지 않으면 설치가 어려울 수 있으니 엘리베이터·출입구를 꼭 확인해 주세요.</li>
+        <li>설치 경로(통로·엘리베이터·출입문)의 이동 높이가 <b>850mm 이상</b>이어야 설치가 가능합니다. 경로가 확보되지 않으면 설치가 어려울 수 있으니 엘리베이터·출입구를 꼭 확인해 주세요.</li>
         <li>테스트 후 이동하지만, 기기 자체 결함으로 작동에 문제가 생길 경우 <b>A/S 비용은 별도로 청구</b>됩니다.</li>
         <li>기기 내부 청결 상태와 작동 여부를 꼭 확인해 주세요. 청소가 필요하면 접수 유형에서 <b>‘오버홀’</b>을 함께 선택해 주세요. (기기 상태에 따라 필요할 수 있으며 추가 비용이 발생합니다.)</li>
         <li>현장에서 해결되지 않는 A/S는 추가 일정이 필요합니다. <b>접수 전에 기기 상태를 반드시 확인</b>하고 구매를 진행해 주세요.</li>
@@ -165,7 +166,7 @@
           <div class="dateRow"><input type="date" name="moveDate" class="mdInput"></div>
         </div>
         <button type="button" class="addDate" id="addDate">+ 날짜 추가</button>
-        <div class="noticebox">창업 준비부터 실제 오픈까지 보통 <b>1~2주</b>가 걸립니다. 설치일자를 여유 있게 잡아 주세요. 접수일 기준 <b>최소 3일 이후</b>부터 선택할 수 있으며, <b>희망일은 3개 이상</b> 골라 주세요.</div>
+        <div class="noticebox">무인 창업의 경우, 준비부터 실제 오픈까지 보통 <b>1~2주</b>가 걸립니다. 설치일자를 여유 있게 잡아 주세요. 접수일 기준 <b>최소 3일 이후</b>부터 선택할 수 있으며, <b>희망일은 3개 이상</b> 골라 주세요.</div>
       </div>
       <div class="field">
         <label>희망 시간대 <span class="req">*</span></label>
@@ -177,7 +178,7 @@
       <h2><span class="n">6</span>기기 정보</h2>
       <div class="field">
         <label>기종 / 모델명 <span class="req">*</span></label>
-        <input type="text" name="model" placeholder="예) 만월경 ○○모델">
+        <input type="text" name="model" placeholder="예) CT-1008">
       </div>
       <div class="row">
         <div class="field">
@@ -295,7 +296,7 @@
       <div class="field">
         <label>결제 세팅 진행 상황 <span class="req">*</span></label>
         <select name="payStatus"><option value="">선택</option><option>직접 준비 완료</option><option>준비 중</option><option>도움 필요 (부가서비스 희망)</option></select>
-        <div class="noticebox">무인 매장 결제(TID 발급 · 업종 등록 등)는 원칙적으로 <b>직접 준비</b>하셔야 합니다. ‘무인카페 창업하는 법’ 등으로 검색하시면 도움이 됩니다. 직접 진행이 어려우시면 <b>유료 부가서비스</b>로 도와드리니, 아래 특이사항에 남겨 주세요.</div>
+        <div class="noticebox">무인 매장 결제(TID 발급 · 업종 등록 등)는 원칙적으로 <b>직접 준비</b>하셔야 합니다. <a href="https://www.mooincafe.kr/dcece744-af9c-4221-9592-fb269115c862" target="_blank" rel="noopener">이 안내 페이지</a>를 참고하시거나, ‘무인카페 창업하는 법’ 등으로 검색해 확인해 보세요. 직접 진행이 어려우시면 <b>유료 부가서비스</b>로 도와드리니, 아래 특이사항에 남겨 주세요.</div>
       </div>
     </div>
 
@@ -337,7 +338,7 @@
       <div class="field">
         <label>특이사항 <span class="req">*</span></label>
         <textarea name="note" placeholder="추가로 전달하실 내용을 적어주세요. (없으면 '없음' 이라고 적어주세요)"></textarea>
-        <div class="noticebox">⚠️ <b>부품 로스 · 청소 등 추가 사항이 있을 경우 꼭 기입해 주세요.</b> 작성하지 않으시면 현장에서 해결하지 못할 가능성이 높습니다.</div>
+        <div class="noticebox">⚠️ <b>부품 로스 · 청소 등 추가 사항이 있을 경우 꼭 기입해 주세요.</b> 상세히 기입해 주셔야 현장에서 원활하게 진행할 수 있습니다.</div>
       </div>
     </div>
 

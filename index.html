@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>이전설치 · 기기A/S 접수 신청</title>
 <style>
-  :root{ --g:#2f6b2f; --g2:#3f8a3f; --line:#d9e3d5; --ink:#243024; --bg:#eef3ea; --input:#fff; }
+  :root{ --g:#2f6b2f; --g2:#3f8a3f; --line:#d9e3d5; --ink:#243024; --bg:#eef3ea; --input:#fff; --warn:#c0392b; }
   *{ box-sizing:border-box; margin:0; padding:0; }
   body{ font-family:'Malgun Gothic','Apple SD Gothic Neo','Noto Sans KR',sans-serif; color:var(--ink);
         background:linear-gradient(180deg,#f4f8f1,#e9f0e5); padding:18px 14px 40px; line-height:1.5; }
@@ -16,9 +16,14 @@
   .hero .fee{ display:inline-block; margin-top:11px; background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.35);
              border-radius:20px; padding:5px 14px; font-size:12px; }
   form{ margin-top:14px; }
+  .warnbox{ background:#fff4f2; border:1px solid #f0c4bb; border-left:4px solid var(--warn); border-radius:12px; padding:14px 15px; margin-top:14px; }
+  .warnbox h3{ font-size:13.5px; color:var(--warn); margin-bottom:9px; }
+  .warnbox ol{ margin:0; padding-left:18px; }
+  .warnbox li{ font-size:12px; color:#5a2a22; line-height:1.6; margin-bottom:7px; }
+  .warnbox li:last-child{ margin-bottom:0; }
   .card{ background:#fff; border:1px solid var(--line); border-radius:12px; padding:15px 15px 16px; margin-bottom:12px; box-shadow:0 3px 12px rgba(40,70,40,.05); }
   .card > h2{ font-size:14px; color:var(--g); margin-bottom:3px; display:flex; align-items:center; gap:7px; }
-  .card > h2 .n{ background:var(--g2); color:#fff; width:20px; height:20px; border-radius:50%; font-size:11px; display:inline-flex; align-items:center; justify-content:center; }
+  .card > h2 .n{ background:var(--g2); color:#fff; width:20px; height:20px; border-radius:50%; font-size:11px; display:inline-flex; align-items:center; justify-content:center; flex:none; }
   .card > .desc{ font-size:11.5px; color:#6f7c6b; margin-bottom:12px; }
   .field{ margin-bottom:12px; }
   .field:last-child{ margin-bottom:0; }
@@ -32,7 +37,8 @@
   .row{ display:flex; gap:10px; }
   .row > .field{ flex:1; }
   .hint{ font-size:11px; color:#8a9886; margin-top:4px; }
-  .noticebox{ font-size:11.5px; color:#3c4a3a; margin-top:6px; background:#f4f8f1; border:1px solid var(--line); border-left:3px solid var(--g2); border-radius:8px; padding:9px 11px; line-height:1.55; }
+  .noticebox{ font-size:11.5px; color:#3c4a3a; margin-top:8px; background:#f4f8f1; border:1px solid var(--line); border-left:3px solid var(--g2); border-radius:8px; padding:9px 11px; line-height:1.55; }
+  .noticebox b{ color:var(--g); }
   .dateRow{ display:flex; gap:8px; align-items:center; margin-bottom:8px; }
   .dateRow:last-child{ margin-bottom:0; }
   .dateRow input{ flex:1; }
@@ -44,6 +50,11 @@
   .pill input{ position:absolute; opacity:0; inset:0; cursor:pointer; }
   .pill span{ display:block; border:1.4px solid var(--line); border-radius:9px; padding:9px 15px; font-size:13px; cursor:pointer; background:#fff; }
   .pill input:checked + span{ border-color:var(--g2); background:#eef6ea; color:var(--g); font-weight:700; }
+  .filefield{ margin-bottom:11px; }
+  .filefield:last-child{ margin-bottom:0; }
+  input[type=file]{ width:100%; font-size:12px; padding:9px 10px; border:1.4px dashed var(--line); border-radius:9px; background:#fafcf9; color:#5a6658; }
+  .subhead{ font-size:12px; font-weight:800; color:var(--g); margin:2px 0 9px; padding-bottom:5px; border-bottom:1px solid var(--line); }
+  .subhead.mt{ margin-top:16px; }
   .agree{ display:flex; align-items:flex-start; gap:9px; font-size:12px; color:#3c4a3a; }
   .agree input{ width:18px; height:18px; margin-top:1px; flex:none; accent-color:var(--g2); }
   .agree a{ color:var(--g); }
@@ -71,6 +82,16 @@
 
   <form id="form" novalidate>
 
+    <div class="warnbox" id="warnbox">
+      <h3>⚠️ 접수 전 꼭 확인해 주세요</h3>
+      <ol>
+        <li>설치 경로(통로·엘리베이터·출입문)의 폭·높이가 <b>850mm 이상</b>이어야 설치가 가능합니다. 경로가 확보되지 않으면 설치가 어려울 수 있으니 엘리베이터·출입구를 꼭 확인해 주세요.</li>
+        <li>테스트 후 이동하지만, 기기 자체 결함으로 작동에 문제가 생길 경우 <b>A/S 비용은 별도로 청구</b>됩니다.</li>
+        <li>기기 내부 청결 상태와 작동 여부를 꼭 확인해 주세요. 청소가 필요하면 접수 유형에서 <b>‘오버홀’</b>을 함께 선택해 주세요. (기기 상태에 따라 필요할 수 있으며 추가 비용이 발생합니다.)</li>
+        <li>현장에서 해결되지 않는 A/S는 추가 일정이 필요합니다. <b>접수 전에 기기 상태를 반드시 확인</b>하고 구매를 진행해 주세요.</li>
+      </ol>
+    </div>
+
     <div class="card">
       <h2><span class="n">1</span>접수 유형 <span class="req">*</span></h2>
       <div class="desc">신청하실 유형을 선택하세요. (중복 선택 가능 · 선택하면 관련 항목이 나타납니다)</div>
@@ -78,8 +99,10 @@
         <label class="pill"><input type="checkbox" name="applyType" value="이전설치 접수"><span>이전설치 접수</span></label>
         <label class="pill"><input type="checkbox" name="applyType" value="기기 A/S 접수"><span>기기 A/S 접수</span></label>
         <label class="pill"><input type="checkbox" name="applyType" value="오버홀 접수"><span>오버홀 접수</span></label>
+        <label class="pill"><input type="checkbox" name="applyType" value="현장실사 (출장비 별도)"><span>현장실사 (출장비 별도)</span></label>
       </div>
       <div class="hint">· 오버홀 : 기기를 전체 분해하여 내부까지 구석구석 청소·정비하는 서비스입니다.</div>
+      <div class="hint">· 현장실사 : 창업이 처음이라 어려우시면 선택해 주세요. 방문해 설치 환경을 확인해 드립니다. (출장비 별도)</div>
     </div>
 
     <div class="card">
@@ -133,12 +156,16 @@
 
     <div class="card">
       <h2><span class="n">5</span>희망 일정</h2>
+      <div class="desc">설치·작업을 원하시는 날짜입니다.</div>
       <div class="field">
-        <label>희망일 <span class="req">*</span> <span style="font-weight:500;color:#8a9886;font-size:11px">(여러 날짜 선택 가능 · 지난 날짜 선택 불가)</span></label>
+        <label>희망일 <span class="req">*</span> <span style="font-weight:500;color:#8a9886;font-size:11px">(최소 3개 이상 선택)</span></label>
         <div id="moveDates">
+          <div class="dateRow"><input type="date" name="moveDate" class="mdInput"></div>
+          <div class="dateRow"><input type="date" name="moveDate" class="mdInput"></div>
           <div class="dateRow"><input type="date" name="moveDate" class="mdInput"></div>
         </div>
         <button type="button" class="addDate" id="addDate">+ 날짜 추가</button>
+        <div class="noticebox">창업 준비부터 실제 오픈까지 보통 <b>1~2주</b>가 걸립니다. 설치일자를 여유 있게 잡아 주세요. 접수일 기준 <b>최소 3일 이후</b>부터 선택할 수 있으며, <b>희망일은 3개 이상</b> 골라 주세요.</div>
       </div>
       <div class="field">
         <label>희망 시간대 <span class="req">*</span></label>
@@ -170,12 +197,30 @@
         </div>
       </div>
       <div class="field hide" id="stopWrap">
-        <label>언제부터 중단됐나요? <span class="req">*</span></label>
+        <label>언제부터 중단되었나요? <span class="req">*</span></label>
         <input type="text" name="stopSince" placeholder="예) 2024년 말부터">
       </div>
       <div class="field">
         <label>접수 목적 <span class="req">*</span></label>
         <input type="text" name="purpose" placeholder="예) 매장 이전, 양수도, 고장 A/S 등">
+      </div>
+      <div class="field hide" data-showfield="move">
+        <label>포함 구성 (해당되는 것 모두 선택)</label>
+        <div class="pills">
+          <label class="pill"><input type="checkbox" name="includes" value="탄산수기"><span>탄산수기</span></label>
+          <label class="pill"><input type="checkbox" name="includes" value="디저트머신"><span>디저트머신</span></label>
+          <label class="pill"><input type="checkbox" name="includes" value="에어컨 펌프"><span>에어컨 펌프</span></label>
+        </div>
+        <div class="noticebox">에어컨 펌프가 포함되면 배수구가 멀어도 펌프로 물을 끌어 배수할 수 있습니다.</div>
+      </div>
+      <div class="field hide" data-showfield="move">
+        <label>판매자 쪽에서 바로 테스트 가능한 상태인가요? <span class="req">*</span></label>
+        <div class="pills">
+          <label class="pill"><input type="radio" name="sellerTestReady" value="가능(전기·수도 연결 시 즉시)"><span>가능 (전기·수도 연결하면 바로)</span></label>
+          <label class="pill"><input type="radio" name="sellerTestReady" value="불가"><span>불가</span></label>
+          <label class="pill"><input type="radio" name="sellerTestReady" value="모름"><span>모름</span></label>
+        </div>
+        <div class="hint">전기·수도만 연결하면 즉시 작동 테스트가 가능한 상태인지 알려 주세요.</div>
       </div>
     </div>
 
@@ -214,34 +259,85 @@
       <div class="field">
         <label>디자인 변경이 필요하신가요? <span class="req">*</span></label>
         <select name="designChange"><option value="">선택</option><option>아니오</option><option>예 (변경 희망)</option></select>
-        <div class="noticebox">※ 기기 디자인(외관·래핑 등) 변경 작업은 당사 서비스 범위에 포함되지 않습니다. 변경을 원하시는 경우, 고객님께서 별도의 전문 업체를 직접 섭외하여 진행해 주셔야 합니다.</div>
+        <div class="noticebox">‹ 기기 디자인(외관·래핑 등) 변경 작업은 당사 서비스 범위에 포함되지 않습니다. 변경을 원하시는 경우, 고객님께서 별도의 전문 업체를 직접 섭외하여 진행해 주셔야 합니다.</div>
       </div>
     </div>
 
     <div class="card hide" data-show="move">
       <h2><span class="n">9</span>설치지 환경</h2>
-      <div class="desc">새로 설치할 도착지의 환경입니다.</div>
-      <div class="row">
-        <div class="field">
-          <label>수도 <span class="req">*</span></label>
-          <select name="envWater"><option value="">선택</option><option>있음</option><option>없음</option><option>모름</option></select>
-        </div>
-        <div class="field">
-          <label>인터넷(유선) <span class="req">*</span></label>
-          <select name="envNet"><option value="">선택</option><option>가능</option><option>불가</option><option>모름</option></select>
-        </div>
+      <div class="desc">새로 설치할 도착지의 환경입니다. 정확히 적어 주실수록 현장에서 문제가 줄어듭니다.</div>
+      <div class="field">
+        <label>수도(급수) 위치 — 어디서 나오나요? <span class="req">*</span></label>
+        <input type="text" name="waterSource" placeholder="예) 싱크대 하부 / 벽면 급수 / 없음 등">
       </div>
       <div class="field">
-        <label>배수 연결 위치 <span class="req">*</span></label>
-        <input type="text" name="envDrain" placeholder="예) 싱크대 하부 / 별도 배관 등">
+        <label>전기(콘센트) 위치 <span class="req">*</span></label>
+        <input type="text" name="elecSource" placeholder="예) 좌측 벽면 콘센트 2구 등">
+      </div>
+      <div class="field">
+        <label>배수 위치 <span class="req">*</span></label>
+        <input type="text" name="envDrain" placeholder="예) 싱크대 하부 / 바닥 배수구 위치 등">
+      </div>
+      <div class="field">
+        <label>인터넷 랜선 연결 가능 여부 <span class="req">*</span></label>
+        <select name="envNet"><option value="">선택</option><option>가능</option><option>불가</option><option>모름</option></select>
+      </div>
+      <div class="noticebox">
+        · 기기 설치 위치 근처에 <b>수도 연결 · 싱크대 · 콘센트</b>가 필요합니다.<br>
+        · 배수구가 멀 경우 <b>에어컨 펌프</b>로 물을 끌어 배수하며, 펌프는 당사에서 판매해 드릴 수 있습니다.<br>
+        · 배수 · 급수 · 전기 배관은 현장 상황에 따라 <b>노출</b>될 수 있습니다.<br>
+        · 기기를 놓을 <b>위치를 미리 정해</b> 두세요.
+      </div>
+    </div>
+
+    <div class="card hide" data-show="move">
+      <h2><span class="n">10</span>결제 설정 (TID · 업종등록)</h2>
+      <div class="field">
+        <label>결제 세팅 진행 상황 <span class="req">*</span></label>
+        <select name="payStatus"><option value="">선택</option><option>직접 준비 완료</option><option>준비 중</option><option>도움 필요 (부가서비스 희망)</option></select>
+        <div class="noticebox">무인 매장 결제(TID 발급 · 업종 등록 등)는 원칙적으로 <b>직접 준비</b>하셔야 합니다. ‘무인카페 창업하는 법’ 등으로 검색하시면 도움이 됩니다. 직접 진행이 어려우시면 <b>유료 부가서비스</b>로 도와드리니, 아래 특이사항에 남겨 주세요.</div>
+      </div>
+    </div>
+
+    <div class="card hide" data-show="move">
+      <h2><span class="n">11</span>현장 사진</h2>
+      <div class="desc">사진을 첨부해 주시면 현장 확인이 훨씬 정확해집니다. (업로드 시 자동으로 용량을 줄여 전송합니다)</div>
+
+      <div class="subhead">판매자 쪽 (현재 기기)</div>
+      <div class="filefield">
+        <label>① 가게 위치 (건물 / 호실)</label>
+        <input type="file" accept="image/*" name="photo" data-label="판매자-가게위치">
+      </div>
+      <div class="filefield">
+        <label>② 기계 전체 사진</label>
+        <input type="file" accept="image/*" name="photo" data-label="판매자-기계전체">
+      </div>
+      <div class="filefield">
+        <label>③ 기계 내부 사진 (상)</label>
+        <input type="file" accept="image/*" name="photo" data-label="판매자-기계내부상">
+      </div>
+      <div class="filefield">
+        <label>④ 기계 내부 사진 (하)</label>
+        <input type="file" accept="image/*" name="photo" data-label="판매자-기계내부하">
+      </div>
+
+      <div class="subhead mt">구매자 쪽 (설치할 곳)</div>
+      <div class="filefield">
+        <label>① 설치할 가게 위치 (건물 / 호실)</label>
+        <input type="file" accept="image/*" name="photo" data-label="구매자-가게위치">
+      </div>
+      <div class="filefield">
+        <label>② 설치 예정 자리 (수도 · 전기 · 배수 주변)</label>
+        <input type="file" accept="image/*" name="photo" data-label="구매자-설치자리">
       </div>
     </div>
 
     <div class="card">
-      <h2><span class="n">10</span>기타 요청 / 문의</h2>
+      <h2><span class="n">12</span>기타 요청 / 특이사항</h2>
       <div class="field">
-        <label>내용 <span class="req">*</span></label>
+        <label>특이사항 <span class="req">*</span></label>
         <textarea name="note" placeholder="추가로 전달하실 내용을 적어주세요. (없으면 '없음' 이라고 적어주세요)"></textarea>
+        <div class="noticebox">⚠️ <b>부품 로스 · 청소 등 추가 사항이 있을 경우 꼭 기입해 주세요.</b> 작성하지 않으시면 현장에서 해결하지 못할 가능성이 높습니다.</div>
       </div>
     </div>
 
@@ -261,7 +357,7 @@
   <div class="done" id="done">
     <div class="ico">✓</div>
     <h2>접수가 완료되었습니다</h2>
-    <p>작성해 주셔서 감사합니다.<br>담당자가 확인 후 남겨주신 연락처로 견적과 일정을 안내드리겠습니다.</p>
+    <p>입성해 주셔서 감사합니다.<br>담당자가 확인 후 남겨주신 연락처로 견적과 일정을 안내드리겠습니다.</p>
   </div>
 
 </div>
@@ -270,10 +366,10 @@
   var WEBAPP_URL = 'https://script.google.com/macros/s/AKfycby2BMK9NY-tmZwSP28yAF0Xl5gPuAyPdw8TI3Hbzqg3VgHwcl1WWc4IDsKOoxE9c7Xx/exec';
   var form = document.getElementById('form');
 
-  // ── 접수 유형에 따른 조건부 표시 ──
-  function setCard(card, show){
-    card.classList.toggle('hide', !show);
-    card.querySelectorAll('input,select,textarea').forEach(function(el){ el.disabled = !show; });
+  // ── 접수 유형에 따라 조건부 표시 ──
+  function setEl(el, show){
+    el.classList.toggle('hide', !show);
+    el.querySelectorAll('input,select,textarea').forEach(function(f){ f.disabled = !show; });
   }
   function renumber(){
     var n = 1;
@@ -287,8 +383,9 @@
   function applyVisibility(){
     var moveOn = typeChecked('이전설치 접수');
     var asOn = typeChecked('기기 A/S 접수');
-    document.querySelectorAll('.card[data-show="move"]').forEach(function(c){ setCard(c, moveOn); });
-    document.querySelectorAll('.card[data-show="as"]').forEach(function(c){ setCard(c, asOn); });
+    document.querySelectorAll('.card[data-show="move"]').forEach(function(c){ setEl(c, moveOn); });
+    document.querySelectorAll('.card[data-show="as"]').forEach(function(c){ setEl(c, asOn); });
+    document.querySelectorAll('[data-showfield="move"]').forEach(function(f){ setEl(f, moveOn); });
     renumber();
   }
   document.querySelectorAll('input[name="applyType"]').forEach(function(c){ c.addEventListener('change', applyVisibility); });
@@ -300,17 +397,18 @@
     });
   });
 
-  // 희망일: 지난 날짜 제한 + 여러 날짜 추가
-  function todayStr(){
+  // 희망일: 접수일 +3일부터 선택 가능
+  function pad(n){ return ('0' + n).slice(-2); }
+  function minDateStr(){
     var d = new Date();
-    var m = ('0' + (d.getMonth() + 1)).slice(-2);
-    var day = ('0' + d.getDate()).slice(-2);
-    return d.getFullYear() + '-' + m + '-' + day;
+    d.setDate(d.getDate() + 3);
+    return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
   }
-  document.querySelectorAll('.mdInput').forEach(function(i){ i.min = todayStr(); });
+  function applyMin(inp){ inp.min = minDateStr(); }
+  document.querySelectorAll('.mdInput').forEach(applyMin);
   document.getElementById('addDate').addEventListener('click', function(){
     var row = document.createElement('div'); row.className = 'dateRow';
-    var inp = document.createElement('input'); inp.type = 'date'; inp.name = 'moveDate'; inp.className = 'mdInput'; inp.min = todayStr();
+    var inp = document.createElement('input'); inp.type = 'date'; inp.name = 'moveDate'; inp.className = 'mdInput'; applyMin(inp);
     var rm = document.createElement('button'); rm.type = 'button'; rm.className = 'rm'; rm.textContent = '✕';
     rm.addEventListener('click', function(){ row.remove(); });
     row.appendChild(inp); row.appendChild(rm);
@@ -319,44 +417,68 @@
 
   function cardVisible(name){
     var el = form.querySelector('[name="' + name + '"]');
-    return !!(el && el.closest('.card') && !el.closest('.card').classList.contains('hide'));
+    return !!(el && el.closest('.card') && !el.closest('.card').classList.contains('hide') && !el.disabled);
+  }
+
+  // 사진 압축 (긴 변 최대 1600px, JPEG 0.7)
+  function compressImage(file){
+    return new Promise(function(resolve){
+      var reader = new FileReader();
+      reader.onload = function(e){
+        var img = new Image();
+        img.onload = function(){
+          var max = 1600, w = img.width, h = img.height;
+          if (w > max || h > max){ if (w >= h){ h = Math.round(h * max / w); w = max; } else { w = Math.round(w * max / h); h = max; } }
+          var canvas = document.createElement('canvas'); canvas.width = w; canvas.height = h;
+          canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+          resolve(canvas.toDataURL('image/jpeg', 0.7));
+        };
+        img.onerror = function(){ resolve(e.target.result); };
+        img.src = e.target.result;
+      };
+      reader.onerror = function(){ resolve(''); };
+      reader.readAsDataURL(file);
+    });
   }
 
   form.addEventListener('submit', function(e){
     e.preventDefault();
     var err = document.getElementById('err'); err.textContent = '';
 
-    // 데이터 수집 (숨겨진 섹션은 disabled 처리되어 자동 제외됨)
     var data = {};
-    var applyTypes = [];
-    var moveDates = [];
-    new FormData(form).forEach(function(v,k){
+    var applyTypes = [], moveDates = [], includes = [];
+    new FormData(form).forEach(function(v, k){
       if (k === 'applyType') { if (v) applyTypes.push(v); }
       else if (k === 'moveDate') { if (v && v.trim()) moveDates.push(v); }
+      else if (k === 'includes') { if (v) includes.push(v); }
+      else if (k === 'photo') { /* 파일은 별도 처리 */ }
       else { data[k] = v; }
     });
     data.applyType = applyTypes.join(', ');
     data.moveDate = moveDates.join(', ');
+    data.includes = includes.join(', ');
 
     // ── 검증 (보이는 항목만) ──
     if (applyTypes.length === 0){ err.textContent = '접수 유형을 하나 이상 선택해 주세요.'; window.scrollTo(0,0); return; }
-    if (moveDates.length === 0){ err.textContent = '희망일을 1개 이상 선택해 주세요.'; return; }
-    for (var di = 0; di < moveDates.length; di++){ if (moveDates[di] < todayStr()){ err.textContent = '희망일은 오늘 이후 날짜로 선택해 주세요.'; return; } }
+    if (moveDates.length < 3){ err.textContent = '희망일자를 3개 이상 선택해 주세요.'; return; }
+    var mn = minDateStr();
+    for (var di = 0; di < moveDates.length; di++){ if (moveDates[di] < mn){ err.textContent = '희망일자는 접수일 기준 3일 이후부터 선택해 주세요.'; return; } }
     var required = {
-      bizName:'상호/섑함', phone:'연락처',
-      fromAddr:'현재 설치 위치 주소', fromFloor:'현재 설치 위치 층수', fromElev:'현재 설치 위치 엘리베이터',
+      bizName:'상호/성함', phone:'연락처',
+      fromAddr:'현재 설치지 위치 주소', fromFloor:'현재 설치지 위치 층수', fromElev:'현재 설치지 위치 엘리베이터',
       toAddr:'도착지 주소', toFloor:'도착지 층수', toElev:'도착지 엘리베이터',
       timePref:'희망 시간대',
       model:'기종/모델명', installDate:'최초 설치 시기', os:'설치 OS',
-      purpose:'접수 목적',
+      purpose:'접수 목적', sellerTestReady:'판매자 테스트 가능 여부',
       asSymptom:'고장 증상',
       prevBiz:'기존 영업 품목', sameModel:'이후 기종 운영', materialPlan:'재료·레시피 계획', designChange:'디자인 변경',
-      envWater:'수도', envNet:'인터넷', envDrain:'배수 연결 위치',
-      note:'기타 요청 / 문의'
+      waterSource:'수도(급수) 위치', elecSource:'전기(콘센트) 위치', envDrain:'배수 위치', envNet:'인터넷 랜선',
+      payStatus:'결제 세팅 진행 상황',
+      note:'특이사항'
     };
-    for (var k in required){
-      if (!cardVisible(k)) continue;
-      if (!data[k] || !String(data[k]).trim()){ err.textContent = required[k] + ' 항목을 입력해 주세요.'; return; }
+    for (var key in required){
+      if (!cardVisible(key)) continue;
+      if (!data[key] || !String(data[key]).trim()){ err.textContent = required[key] + ' 항목을 입력해 주세요.'; return; }
     }
     if (!data.status){ err.textContent = '현재 가동 상태를 선택해 주세요.'; return; }
     if (data.status === '중단' && (!data.stopSince || !data.stopSince.trim())){ err.textContent = '중단 시점을 입력해 주세요.'; return; }
@@ -368,12 +490,19 @@
     function done(){ document.getElementById('hero').classList.add('hide'); form.classList.add('hide'); document.getElementById('done').style.display='block'; window.scrollTo(0,0); }
     function fail(m){ btn.disabled=false; btn.textContent='접수 신청하기'; err.textContent = m || '전송에 실패했습니다. 인터넷 연결을 확인 후 다시 시도해 주세요.'; }
 
-    if (!WEBAPP_URL){ setTimeout(done, 500); return; }
-    fetch(WEBAPP_URL, {
-      method: 'POST', mode: 'no-cors',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify(data)
-    }).then(function(){ done(); }).catch(function(){ fail(); });
+    // 사진 수집 → 압축 → 전송
+    var fileInputs = Array.prototype.slice.call(form.querySelectorAll('input[type="file"]')).filter(function(inp){ return inp.files && inp.files[0] && !inp.disabled; });
+    Promise.all(fileInputs.map(function(inp){
+      return compressImage(inp.files[0]).then(function(dataUrl){ return { label: inp.getAttribute('data-label') || 'photo', data: dataUrl }; });
+    })).then(function(photos){
+      data.photos = photos.filter(function(p){ return p.data; });
+      if (!WEBAPP_URL){ setTimeout(done, 500); return; }
+      fetch(WEBAPP_URL, {
+        method: 'POST', mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(data)
+      }).then(function(){ done(); }).catch(function(){ fail(); });
+    });
   });
 
   applyVisibility(); // 초기: 유형 미선택 → 이전/A/S 전용 섹션 숨김

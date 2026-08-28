@@ -514,6 +514,13 @@
     if (!document.getElementById('agree').checked){ err.textContent = '개인정보 수집·이용에 동의해 주세요.'; return; }
 
     var btn = document.getElementById('btn');
+    // 기기 세팅 현황(교육 신청)을 기타 요청(note)에 합쳐 저장
+    if (data.eduStatus || (data.eduNote && data.eduNote.trim())){
+      var eduSummary = '[기기 세팅 현황] ' + (data.eduStatus || '(선택 없음)');
+      if (data.eduNote && data.eduNote.trim()) eduSummary += ' / 추가: ' + data.eduNote.trim();
+      data.note = (data.note ? data.note + '\n' : '') + eduSummary;
+    }
+    delete data.eduStatus; delete data.eduNote;
     btn.disabled = true; btn.textContent = '접수 중…';
     function done(){ document.getElementById('hero').classList.add('hide'); form.classList.add('hide'); document.getElementById('done').style.display='block'; window.scrollTo(0,0); }
     function fail(m){ btn.disabled=false; btn.textContent='접수 신청하기'; err.textContent = m || '전송에 실패했습니다. 인터넷 연결을 확인 후 다시 시도해 주세요.'; }

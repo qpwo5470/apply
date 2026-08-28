@@ -91,6 +91,7 @@
         <li>기기 내부 청결 상태와 작동 여부를 꼭 확인해 주세요. 청소가 필요하면 접수 유형에서 <b>‘오버홀’</b>을 함께 선택해 주세요. (기기 상태에 따라 필요할 수 있으며 추가 비용이 발생합니다.)</li>
         <li>현장에서 해결되지 않는 A/S는 추가 일정이 필요합니다. <b>접수 전에 기기 상태를 반드시 확인</b>하고 구매를 진행해 주세요.</li>
       </ol>
+      <label class="agree" style="margin-top:12px"><input type="checkbox" name="confirmRead" id="confirmRead"><span>위 필수 확인 사항을 모두 읽고 이해했습니다. <span class="req">*</span></span></label>
     </div>
 
     <div class="card">
@@ -105,7 +106,7 @@
       </div>
       <div class="hint">· 오버홀 : 기기를 전체 분해하여 내부까지 구석구석 청소·정비하는 서비스입니다.</div>
       <div class="hint">· 현장실사 : 창업이 처음이라 어려우시면 선택해 주세요. 방문해 설치 환경을 확인해 드립니다. (출장비 별도)</div>
-      <div class="hint">· 초기 교육 : 기기 사용법·운영 방법을 처음부터 안내해 드립니다. (20만원, 부가세 별도)</div>
+      <div class="hint">· 초기 교육 : 기기 사용법·운영 방법을 처음부터 안내해 드립니다. 교육비 <b>20만원(부가세 별도)</b>은 이전설치와 함께 신청하실 때 기준이며, <b>교육만 단독 신청</b> 시 지역에 따라 출장비가 별도로 발생합니다.</div>
     </div>
 
     <div class="card">
@@ -335,6 +336,25 @@
       </div>
     </div>
 
+    <div class="card hide" data-show="edu">
+      <h2><span class="n">·</span>기기 세팅 현황</h2>
+      <div class="desc">현재 기기·매장이 어디까지 준비되었는지 알려주시면 교육을 효율적으로 진행할 수 있습니다. 완료된 항목을 모두 체크해 주세요. (무인카페 오픈 준비 기준)</div>
+      <div class="pills">
+        <label class="pill"><input type="checkbox" name="eduStatus" value="사업자등록"><span>사업자등록</span></label>
+        <label class="pill"><input type="checkbox" name="eduStatus" value="영업신고·위생교육(보건증)"><span>영업신고·위생교육(보건증)</span></label>
+        <label class="pill"><input type="checkbox" name="eduStatus" value="TID(가맹점번호)·카드결제 연동"><span>TID(가맹점번호)·카드결제 연동</span></label>
+        <label class="pill"><input type="checkbox" name="eduStatus" value="인터넷·통신(랜선/와이파이) 개통"><span>인터넷·통신(랜선/와이파이) 개통</span></label>
+        <label class="pill"><input type="checkbox" name="eduStatus" value="키오스크·POS 결제 세팅"><span>키오스크·POS 결제 세팅</span></label>
+        <label class="pill"><input type="checkbox" name="eduStatus" value="기기 설치·가동(전원/급수/배수)"><span>기기 설치·가동(전원/급수/배수)</span></label>
+        <label class="pill"><input type="checkbox" name="eduStatus" value="재료·부자재 구비"><span>재료·부자재 구비</span></label>
+        <label class="pill"><input type="checkbox" name="eduStatus" value="CCTV·보안"><span>CCTV·보안</span></label>
+      </div>
+      <div class="field">
+        <label>추가로 알려주실 사항</label>
+        <textarea name="eduNote" placeholder="예) 특정 기기만 세팅 완료 / 재료는 일부만 준비 등 현재 상태를 적어주세요."></textarea>
+      </div>
+    </div>
+
     <div class="card">
       <h2><span class="n">12</span>기타 요청 / 특이사항</h2>
       <div class="field">
@@ -386,8 +406,10 @@
   function applyVisibility(){
     var moveOn = typeChecked('이전설치 접수');
     var asOn = typeChecked('기기 A/S 접수');
+    var eduOn = typeChecked('초기 교육 (20만원·부가세 별도)');
     document.querySelectorAll('.card[data-show="move"]').forEach(function(c){ setEl(c, moveOn); });
     document.querySelectorAll('.card[data-show="as"]').forEach(function(c){ setEl(c, asOn); });
+    document.querySelectorAll('.card[data-show="edu"]').forEach(function(c){ setEl(c, eduOn); });
     document.querySelectorAll('[data-showfield="move"]').forEach(function(f){ setEl(f, moveOn); });
     renumber();
   }
@@ -449,17 +471,19 @@
     var err = document.getElementById('err'); err.textContent = '';
 
     var data = {};
-    var applyTypes = [], moveDates = [], includes = [];
+    var applyTypes = [], moveDates = [], includes = [], eduStatuses = [];
     new FormData(form).forEach(function(v, k){
       if (k === 'applyType') { if (v) applyTypes.push(v); }
       else if (k === 'moveDate') { if (v && v.trim()) moveDates.push(v); }
       else if (k === 'includes') { if (v) includes.push(v); }
+      else if (k === 'eduStatus') { if (v) eduStatuses.push(v); }
       else if (k === 'photo') { /* 파일은 별도 처리 */ }
       else { data[k] = v; }
     });
     data.applyType = applyTypes.join(', ');
     data.moveDate = moveDates.join(', ');
     data.includes = includes.join(', ');
+    data.eduStatus = eduStatuses.join(', ');
 
     // ── 검증 (보이는 항목만) ──
     if (applyTypes.length === 0){ err.textContent = '접수 유형을 하나 이상 선택해 주세요.'; window.scrollTo(0,0); return; }
@@ -486,6 +510,7 @@
     if (!data.status){ err.textContent = '현재 가동 상태를 선택해 주세요.'; return; }
     if (data.status === '중단' && (!data.stopSince || !data.stopSince.trim())){ err.textContent = '중단 시점을 입력해 주세요.'; return; }
     if (cardVisible('asType') && !data.asType){ err.textContent = 'A/S 고장 유형을 선택해 주세요.'; return; }
+    if (!document.getElementById('confirmRead').checked){ err.textContent = '상단 필수 확인 사항을 확인하고 체크해 주세요.'; window.scrollTo(0,0); return; }
     if (!document.getElementById('agree').checked){ err.textContent = '개인정보 수집·이용에 동의해 주세요.'; return; }
 
     var btn = document.getElementById('btn');

@@ -70,7 +70,8 @@
   .done h2{ color:var(--g); font-size:19px; margin-bottom:8px; }
   .done p{ font-size:13.5px; color:#3c4a3a; }
   .hide{ display:none !important; }
-</style>
+.note-emph{ background:#fff6e0; border:1px solid #f0d48a; border-left:4px solid var(--warn); border-radius:8px; padding:9px 11px; margin-top:7px; font-size:12.5px; color:#5f4a17; line-height:1.55; font-weight:500; }
+  </style>
 </head>
 <body>
 <div class="wrap">
@@ -102,11 +103,11 @@
         <label class="pill"><input type="checkbox" name="applyType" value="기기 A/S 접수"><span>기기 A/S 접수</span></label>
         <label class="pill"><input type="checkbox" name="applyType" value="오버홀 접수"><span>오버홀 접수</span></label>
         <label class="pill"><input type="checkbox" name="applyType" value="현장실사 (출장비 별도)"><span>현장실사 (출장비 별도)</span></label>
-        <label class="pill"><input type="checkbox" name="applyType" value="초기 교육 (20만원·부가세 별도)"><span>초기 교육 (20만원·부가세 별도)</span></label>
+        <label class="pill"><input type="checkbox" name="applyType" value="초기 교육"><span>초기 교육</span></label>
       </div>
-      <div class="hint">· 오버홀 : 기기를 전체 분해하여 내부까지 구석구석 청소·정비하는 서비스입니다.</div>
-      <div class="hint">· 현장실사 : 창업이 처음이라 어려우시면 선택해 주세요. 방문해 설치 환경을 확인해 드립니다. (출장비 별도)</div>
-      <div class="hint">· 초기 교육 : 기기 사용법·운영 방법을 처음부터 안내해 드립니다. 교육비 <b>20만원(부가세 별도)</b>은 이전설치와 함께 신청하실 때 기준이며, <b>교육만 단독 신청</b> 시 지역에 따라 출장비가 별도로 발생합니다.</div>
+      <div class="note-emph">· 오버홀 : 기기를 전체 분해하여 내부까지 구석구석 청소·정비하는 서비스입니다.</div>
+      <div class="note-emph">· 현장실사 : 창업이 처음이라 어려우시면 선택해 주세요. 방문해 설치 환경을 확인해 드립니다. (출장비 별도)</div>
+      <div class="note-emph">· 초기 교육 : 기기 사용법·운영 방법을 처음부터 안내해 드립니다. 교육 비용은 신청 내용(이전설치 동시 여부·지역 등)에 따라 달라져 <b>접수 후 별도로 안내</b>드립니다.</div>
     </div>
 
     <div class="card">
@@ -406,7 +407,7 @@
   function applyVisibility(){
     var moveOn = typeChecked('이전설치 접수');
     var asOn = typeChecked('기기 A/S 접수');
-    var eduOn = typeChecked('초기 교육 (20만원·부가세 별도)');
+    var eduOn = typeChecked('초기 교육');
     document.querySelectorAll('.card[data-show="move"]').forEach(function(c){ setEl(c, moveOn); });
     document.querySelectorAll('.card[data-show="as"]').forEach(function(c){ setEl(c, asOn); });
     document.querySelectorAll('.card[data-show="edu"]').forEach(function(c){ setEl(c, eduOn); });
@@ -510,6 +511,7 @@
     if (!data.status){ err.textContent = '현재 가동 상태를 선택해 주세요.'; return; }
     if (data.status === '중단' && (!data.stopSince || !data.stopSince.trim())){ err.textContent = '중단 시점을 입력해 주세요.'; return; }
     if (cardVisible('asType') && !data.asType){ err.textContent = 'A/S 고장 유형을 선택해 주세요.'; return; }
+    if (cardVisible('eduStatus') && !data.eduStatus){ err.textContent = '초기 교육 신청 시 「기기 세팅 현황」에서 완료된 항목을 1개 이상 선택해 주세요.'; window.scrollTo(0,0); return; }
     if (!document.getElementById('confirmRead').checked){ err.textContent = '상단 필수 확인 사항을 확인하고 체크해 주세요.'; window.scrollTo(0,0); return; }
     if (!document.getElementById('agree').checked){ err.textContent = '개인정보 수집·이용에 동의해 주세요.'; return; }
 
